@@ -2,21 +2,15 @@
 
 declare(strict_types=1);
 
-final class StudentController
+final class ProfessorController
 {
-    public function dashboard(): void
+    public function grades(): void
     {
-        Auth::requireRole(['student']);
-        $this->render('student/dashboard', [
-            'title' => 'My grades',
-        ]);
-    }
-
-    public function history(): void
-    {
-        Auth::requireRole(['student']);
-        $this->render('student/history', [
-            'title' => 'GPA history',
+        Auth::requireRole(['professor']);
+        $semesters = Semester::all();
+        $this->render('professor/grades', [
+            'title' => 'Grade entry',
+            'semesters' => $semesters,
         ]);
     }
 
@@ -27,6 +21,6 @@ final class StudentController
     {
         $data['viewFile'] = __DIR__ . '/../views/' . $view . '.php';
         extract($data, EXTR_SKIP);
-        require __DIR__ . '/../views/layouts/student.php';
+        require __DIR__ . '/../views/layouts/professor.php';
     }
 }
